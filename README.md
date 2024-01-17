@@ -1,13 +1,14 @@
 # Installation of Watsonx.ai on OpenShift
 
 This guide provides instructions for a quick PoC kind of installation of Watsonx.ai on OpenShift.<br/>
-Watsonx.ai can be installed on public cloud/on-prem - on top of OpenShift. 
+Watsonx.ai can be installed on top of OpenShift either in public cloud or on-prem.
+
 
 ## Installation Steps
 ### Installing Cloud Pak for Data Control Plane
 
 1. Have a running OCP cluster.
-   I had 6 worker nodes (m6i.2xlarge) running on AWS of which I allocated 3 nodes for OpenShift Data Foundation(ODF). I installed ODF using Operator Hub.
+   I had 6 worker nodes (m6i.2xlarge) running on AWS of which I allocated 3 nodes for OpenShift Data Foundation(ODF). I installed ODF using Operator Hub on the OpenShift web interface.
         
 2. Have Podman or docker desktop up and running on your workstation - to pull images from IBM’s registry
 
@@ -16,7 +17,7 @@ Watsonx.ai can be installed on public cloud/on-prem - on top of OpenShift.
 
 4. Create an environment variable file
   https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=information-setting-up-installation-environment-variables and source it
-   Attached the sample file which I used
+   <br/> Attached the sample file which I used.
        
  5. Login to the OCP cluster using cpd-cli
     
@@ -36,7 +37,6 @@ Watsonx.ai can be installed on public cloud/on-prem - on top of OpenShift.
      Which you assigned in the environment variable file
         PROJECT_CPD_INST_OPERATORS=cpd-operators
         PROJECT_CPD_INST_OPERANDS=cp4d
-      <img width="1615" alt="image" src="https://user-images.githubusercontent.com/19476054/213525727-e7c31c32-28ba-4cc7-97d6-884bfe136e07.png">
 
  8. Before you install an instance of IBM Cloud Pak for Data, you must ensure that the project where the operators will be installed can watch the project where the Cloud Pak for Data control plane and services are installed.
 
@@ -104,3 +104,51 @@ Watsonx.ai can be installed on public cloud/on-prem - on top of OpenShift.
         --get_admin_initial_credentials=true
 
 ### Installing Watsonx.ai service on top of Cloud Pak for Data 
+
+15. Run the following command to create the required OLM objects for IBM watsonx.ai in the operators project for the instance:
+	
+         cpd-cli manage apply-olm \
+         --release=${VERSION} \
+         --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
+         --components=watsonx_ai
+
+ 16. As I wanted to install  meta-llama-llama-2-13b-chat, I added an extra OpenShift worker node of g5.8xlarge type on AWS. 
+     https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=setup-adding-foundation-models
+     has the list of foundational models. <br/>Please check the resource requirements list. Having multiple models will need quite a lot of memory, cpu, gpus.
+
+
+  17. From Operator hub from OpenShift web interface, install Node Feature Discovery operator. Then create an instance of Node feature discovery
+      https://docs.nvidia.com/datacenter/cloud-native/openshift/23.9.1/install-nfd.html
+      
+      Then, from Operator hub from OpenShift web interface, install NVIDIA GPU Operator
+      https://docs.nvidia.com/datacenter/cloud-native/openshift/23.9.1/install-gpu-ocp.html
+
+  18. Create the custom resource for IBM watsonx.ai
+      The OpenShift Data Foundation storage specific command being
+
+            cpd-cli manage apply-cr \
+            --components=watsonx_ai \
+            --release=${VERSION} \
+            --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
+            --block_storage_class=${STG_CLASS_BLOCK} \
+            --file_storage_class=${STG_CLASS_FILE} \
+            --license_acceptance=true
+
+      Monitor the PROJECT_CPD_INST_OPERANDS namespace(cp4d in the case of the attached env variables file) for an errors.
+ 
+      
+   19. Validate the installation <br/>
+
+             cpd-cli manage get-cr-status --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
+
+   20.  Add the desired foundation models
+        https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=setup-adding-foundation-models
+        has the list. Please check the resource requirements list. Having multiple models will need quite a lot of memory, cpu, gpus. <br/> Below is an example.
+
+               oc patch watsonxaiifm watsonxaiifm-cr \
+               --namespace=${PROJECT_CPD_INST_OPERANDS} \
+               --type=merge \
+               --patch='{"spec":{"install_model_list": ["meta-llama-llama-2-70b-chat","ibm-granite-13b-chat-v2"]}}'
+               
+
+                
