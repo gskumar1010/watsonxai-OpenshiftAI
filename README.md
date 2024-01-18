@@ -116,13 +116,15 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
 ### Installing Watsonx.ai service on top of Cloud Pak for Data 
 
 16. Run the following command to create the required OLM objects for IBM watsonx.ai in the operators project for the instance:
-	
+	https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=watsonxai-installing#cli-install__procedure__title__1 Step 2
+ 
          cpd-cli manage apply-olm \
          --release=${VERSION} \
          --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
          --components=watsonx_ai
 
   17. Create the custom resource for IBM watsonx.ai
+      https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=watsonxai-installing#cli-install__procedure__title__1 step 3
       The OpenShift Data Foundation storage specific command being
 
             cpd-cli manage apply-cr \
