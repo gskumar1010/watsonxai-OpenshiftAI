@@ -8,22 +8,32 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
 ### Installing Cloud Pak for Data Control Plane
 
 1. Have a running OCP cluster.
-   I had 6 worker nodes (m6i.2xlarge) running on AWS of which I allocated 3 nodes for OpenShift Data Foundation(ODF). I installed ODF using Operator Hub on the OpenShift web interface.
-        
-2. Have Podman or docker desktop up and running on your workstation - to pull images from IBM’s registry
+   I had 6 worker nodes (m6i.2xlarge) running on AWS of which I allocated 3 nodes for OpenShift Data Foundation(ODF). I installed ODF using Operator Hub on the OpenShift web interface. <br/>
+   As I wanted to install  meta-llama-llama-2-13b-chat foundational model, I added an extra OpenShift worker node of g5.8xlarge type on AWS. <br/>
+     https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=setup-adding-foundation-models
+     has the list of foundational models. <br/>Please check the resource requirements list. <br/>Note: Having multiple models will need quite a lot of memory, cpu, gpus.
 
-3. Install Cloud Pak for Data command-line interface  cpd-cli command line client  on your workstation
+
+2. From Operator hub from OpenShift web interface, install Node Feature Discovery operator. Then create an instance of Node feature discovery<br/>
+      https://docs.nvidia.com/datacenter/cloud-native/openshift/23.9.1/install-nfd.html
+      
+      Then, from Operator hub from OpenShift web interface, install NVIDIA GPU Operator. Then create an instance of Cluster Policy<br/>
+      https://docs.nvidia.com/datacenter/cloud-native/openshift/23.9.1/install-gpu-ocp.html
+        
+3. Have Podman or docker desktop up and running on your workstation - to pull images from IBM’s registry
+
+4. Install Cloud Pak for Data command-line interface  cpd-cli command line client  on your workstation
   https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=workstation-installing-cloud-pak-data-cli
 
-4. Create an environment variable file <br/>
+5. Create an environment variable file <br/>
   https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=information-setting-up-installation-environment-variables and source it
    <br/> [Sample environment variables file ](cpd_vars.sh) .
        
- 5. Login to the OCP cluster using cpd-cli
+ 6. Login to the OCP cluster using cpd-cli
     
         cpd-cli manage login-to-ocp --username=${OCP_USERNAME} --password=${OCP_PASSWORD} --server=${OCP_URL}
         
- 6. Get IBM entitlement key by logging into https://myibm.ibm.com/products-services/containerlibrary
+ 7. Get IBM entitlement key by logging into https://myibm.ibm.com/products-services/containerlibrary
     https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=information-obtaining-your-entitlement-api-key
 
     Then update the global pull secret<br/>
@@ -105,25 +115,14 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
 
 ### Installing Watsonx.ai service on top of Cloud Pak for Data 
 
-15. Run the following command to create the required OLM objects for IBM watsonx.ai in the operators project for the instance:
+16. Run the following command to create the required OLM objects for IBM watsonx.ai in the operators project for the instance:
 	
          cpd-cli manage apply-olm \
          --release=${VERSION} \
          --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
          --components=watsonx_ai
 
- 16. As I wanted to install  meta-llama-llama-2-13b-chat, I added an extra OpenShift worker node of g5.8xlarge type on AWS. 
-     https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=setup-adding-foundation-models
-     has the list of foundational models. <br/>Please check the resource requirements list. Having multiple models will need quite a lot of memory, cpu, gpus.
-
-
-  17. From Operator hub from OpenShift web interface, install Node Feature Discovery operator. Then create an instance of Node feature discovery<br/>
-      https://docs.nvidia.com/datacenter/cloud-native/openshift/23.9.1/install-nfd.html
-      
-      Then, from Operator hub from OpenShift web interface, install NVIDIA GPU Operator <br/>
-      https://docs.nvidia.com/datacenter/cloud-native/openshift/23.9.1/install-gpu-ocp.html
-
-  18. Create the custom resource for IBM watsonx.ai
+  17. Create the custom resource for IBM watsonx.ai
       The OpenShift Data Foundation storage specific command being
 
             cpd-cli manage apply-cr \
@@ -135,13 +134,12 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
             --license_acceptance=true
 
       Monitor the PROJECT_CPD_INST_OPERANDS namespace(cp4d in the case of the attached env variables file) for an errors.
- 
       
-   19. Validate the installation <br/>
+   18. Validate the installation <br/>
 
              cpd-cli manage get-cr-status --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 
-   20.  Add the desired foundation models <br/>
+   19.  Add the desired foundation models <br/>
         https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=setup-adding-foundation-models
         has the list.<br/> Please check the resource requirements list. Having multiple models will need quite a lot of memory, cpu, gpus. <br/> Below is an example for adding foundational models.
 
