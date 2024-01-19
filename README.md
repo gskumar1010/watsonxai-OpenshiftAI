@@ -11,7 +11,7 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
    I had 6 worker nodes (m6i.2xlarge) running on AWS of which I allocated 3 nodes for OpenShift Data Foundation(ODF). I installed ODF using Operator Hub on the OpenShift web interface. <br/>
    As I wanted to install  meta-llama-llama-2-13b-chat foundational model, I added an extra OpenShift worker node of g5.8xlarge type on AWS. <br/>
      https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=setup-adding-foundation-models
-     has the list of foundational models. <br/>Please check the resource requirements list. <br/>Note: Having multiple models will need quite a lot of memory, cpu, gpus.
+     has the list of foundational models. <br/>Please check the resource requirements list. <br/>Note: If you want to install multiple models, it will need quite a lot of memory, cpu, gpus.
 
 
 2. From Operator hub from OpenShift web interface, install Node Feature Discovery operator. Then create an instance of Node feature discovery<br/>
@@ -150,5 +150,5 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
                --type=merge \
                --patch='{"spec":{"install_model_list": ["meta-llama-llama-2-70b-chat","ibm-granite-13b-chat-v2"]}}'
                
-
+<img width="987" alt="image" src="images/pod-with-foundational-model-running.png">
                 
