@@ -143,7 +143,7 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
 
    19.  Add the desired foundation models <br/>
         https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=setup-adding-foundation-models
-        has the list.<br/> Please check the resource requirements list. Having multiple models will need quite a lot of memory, cpu, gpus. <br/> Below is an example for adding foundational models.
+        has the list.<br/> Please check the resource requirements list. Having multiple models will need quite a lot of memory, cpu, gpus. <br/> 
 
                oc patch watsonxaiifm watsonxaiifm-cr \
                --namespace=${PROJECT_CPD_INST_OPERANDS} \
