@@ -9,10 +9,6 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
 
 1. Have a running OCP cluster.
    I had 6 worker nodes (m6i.2xlarge) running on AWS of which I allocated 3 nodes for OpenShift Data Foundation(ODF). I installed ODF using Operator Hub on the OpenShift web interface. <br/>
-   As I wanted to install  meta-llama-llama-2-13b-chat foundational model, I added an extra OpenShift worker node of g5.8xlarge type on AWS. <br/>
-     https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=setup-adding-foundation-models
-     has the list of foundational models. <br/>Please check the resource requirements list. <br/>Note: If you want to install multiple models, it will need quite a lot of memory, cpu, gpus.
-
 
 2. From Operator hub from OpenShift web interface, install Node Feature Discovery operator. Then create an instance of Node feature discovery<br/>
       https://docs.nvidia.com/datacenter/cloud-native/openshift/23.9.1/install-nfd.html
@@ -141,9 +137,12 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
 
              cpd-cli manage get-cr-status --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 
-   19.  Add the desired foundation models <br/>
-        https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=setup-adding-foundation-models
-        has the list.<br/> Please check the resource requirements list. Having multiple models will need quite a lot of memory, cpu, gpus. <br/> 
+   19. As I wanted to install  meta-llama-llama-2-13b-chat foundational model, I added an extra OpenShift worker node of g5.8xlarge type on AWS. <br/>
+     https://www.ibm.com/docs/en/cloud-paks/cp-data/4.8.x?topic=setup-adding-foundation-models
+     has the list of foundational models. <br/>Please check the resource requirements list. <br/>Note: If you want to install multiple models, it will need quite a lot of memory, cpu, gpus.
+
+   20.  Add the desired foundation models <br/>
+        
 
                oc patch watsonxaiifm watsonxaiifm-cr \
                --namespace=${PROJECT_CPD_INST_OPERANDS} \
