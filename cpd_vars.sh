@@ -11,6 +11,7 @@
 
 #export CPD_CLI_MANAGE_WORKSPACE=/Users/username
 # export OLM_UTILS_LAUNCH_ARGS=<enter launch arguments>
+export OLM_UTILS_IMAGE=icr.io/cpopen/cpd/olm-utils-v2:latest
 
 
 # ------------------------------------------------------------------------------
