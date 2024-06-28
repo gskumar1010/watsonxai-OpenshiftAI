@@ -150,4 +150,7 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
                --patch='{"spec":{"install_model_list": ["meta-llama-llama-2-70b-chat","ibm-granite-13b-chat-v2"]}}'
                
 <img width="987" alt="image" src="images/pod-with-foundational-model-running.png">
+<br/>
+<br/>
+<img width="987" alt="image" src="images/image.png">
                 
