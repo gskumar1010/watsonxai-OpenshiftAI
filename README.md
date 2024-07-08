@@ -46,7 +46,7 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
 
  11. Before you install an instance of IBM Cloud Pak for Data, you must ensure that the project where the operators will be installed can watch the project where the Cloud Pak for Data control plane and services are installed.
 
-    https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-required-permissions-projects-namespaces#taskprep-for-cpd-project-permissions__steps
+https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-required-permissions-projects-namespaces#taskprep-for-cpd-project-permissions__steps
 
         cpd-cli manage authorize-instance-topology \
         --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
