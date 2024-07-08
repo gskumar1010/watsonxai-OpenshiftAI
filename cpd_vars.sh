@@ -11,7 +11,7 @@
 
 #export CPD_CLI_MANAGE_WORKSPACE=/Users/username
 # export OLM_UTILS_LAUNCH_ARGS=<enter launch arguments>
-export OLM_UTILS_IMAGE=icr.io/cpopen/cpd/olm-utils-v2:latest
+export OLM_UTILS_IMAGE=icr.io/cpopen/cpd/olm-utils-v3:latest
 
 
 # ------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ export IBM_ENTITLEMENT_KEY=key-goes-here
 # Cloud Pak for Data version
 # ------------------------------------------------------------------------------
 
-export VERSION=4.8.1
+export VERSION=5.0.0
 
 
 # ------------------------------------------------------------------------------
