@@ -138,7 +138,7 @@ https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-require
              cpd-cli manage get-cr-status --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 
    19. As I wanted to install  meta-llama-llama-2-13b-chat foundational model, I added an extra OpenShift worker node of g5.8xlarge type on AWS. <br/>
-     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=setup-adding-foundation-models
+     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=setup-adding-ai-models
      has the list of foundational models. <br/>Please check the resource requirements list. <br/>Note: If you want to install multiple models, it will need quite a lot of memory, cpu, gpus.
 
    20.  Add the desired foundation models <br/>
