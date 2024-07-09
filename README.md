@@ -14,7 +14,7 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
   	From Operator hub from OpenShift web interface, install Node Feature Discovery operator. Then create an instance of Node feature discovery<br/>      
       Then, from Operator hub from OpenShift web interface, install NVIDIA GPU Operator. Then create an instance of Cluster Policy<br/>
 
-   Then, from Operator hub from OpenShift web interface, install OpenShift AI Operator. Then create an instance of Cluster Policy<br/>
+   Then, from Operator hub from OpenShift web interface, install OpenShift AI Operator. Then create an instance of DataScienceCluster<br/>
         
 4. Have Podman or docker desktop up and running on your workstation - to pull images from IBM’s registry
 
