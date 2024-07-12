@@ -14,37 +14,37 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
   	From Operator hub from OpenShift web interface, install Node Feature Discovery operator. Then create an instance of Node feature discovery<br/>      
       Then, from Operator hub from OpenShift web interface, install NVIDIA GPU Operator. Then create an instance of Cluster Policy<br/>
 
-   Then, from Operator hub from OpenShift web interface, install OpenShift AI Operator. Then create an instance of DataScienceCluster<br/>
+   Then, from Operator hub from OpenShift web interface, install OpenShift AI Operator. Please follow instructions listed in https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.8/html/installing_and_uninstalling_openshift_ai_self-managed/preparing-openshift-ai-for-ibm-cpd_prepare-openshift-ai-ibm-cpd#preparing-openshift-ai-for-ibm-cpd_prepare-openshift-ai-ibm-cpd <br/>
         
-4. Have Podman or docker desktop up and running on your workstation - to pull images from IBM’s registry
+3. Have Podman or docker desktop up and running on your workstation - to pull images from IBM’s registry
 
-5. Install Cloud Pak for Data command-line interface  cpd-cli command line client  on your workstation
+4. Install Cloud Pak for Data command-line interface  cpd-cli command line client  on your workstation
   https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=workstation-installing-cloud-pak-data-cli
 
-7. Create an environment variable file <br/>
+5. Create an environment variable file <br/>
   https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=information-setting-up-installation-environment-variables and source it
    <br/> [Sample environment variables file ](cpd_vars.sh) .
        
- 8. Login to the OCP cluster using cpd-cli
+ 6. Login to the OCP cluster using cpd-cli
     
         cpd-cli manage login-to-ocp --username=${OCP_USERNAME} --password=${OCP_PASSWORD} --server=${OCP_URL}
         
- 9. Get IBM entitlement key by logging into https://myibm.ibm.com/products-services/containerlibrary
+ 7. Get IBM entitlement key by logging into https://myibm.ibm.com/products-services/containerlibrary
     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=information-obtaining-your-entitlement-api-key
 
     Then update the global pull secret<br/>
     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=cluster-updating-global-image-pull-secret command	
     
-        cpd-cli manage add-icr-cred-to-global-pull-secret \
-        --entitled_registry_key=${IBM_ENTITLEMENT_KEY}
+	cpd-cli manage add-icr-cred-to-global-pull-secret \
+	--entitled_registry_key=${IBM_ENTITLEMENT_KEY}
 
 
- 10.  Create 2 namespaces in OpenShift (cpd-operators, cp4d)
+ 8.  Create 2 namespaces in OpenShift (cpd-operators, cp4d)
      Which you assigned in the environment variable file
         PROJECT_CPD_INST_OPERATORS=cpd-operators
         PROJECT_CPD_INST_OPERANDS=cp4d
 
- 11. Before you install an instance of IBM Cloud Pak for Data, you must ensure that the project where the operators will be installed can watch the project where the Cloud Pak for Data control plane and services are installed.
+ 9. Before you install an instance of IBM Cloud Pak for Data, you must ensure that the project where the operators will be installed can watch the project where the Cloud Pak for Data control plane and services are installed.
 
 https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-required-permissions-projects-namespaces#taskprep-for-cpd-project-permissions__steps
 
@@ -52,7 +52,7 @@ https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-require
         --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
         --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS}
 
-11. Before you install IBM Cloud Pak for Data, you must install the IBM Cloud Pak foundational services Certificate manager and License Service.
+10. Before you install IBM Cloud Pak for Data, you must install the IBM Cloud Pak foundational services Certificate manager and License Service.
     
     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=cluster-installing-shared-components#taskshared-components__steps__1
 
@@ -61,7 +61,7 @@ https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-require
         --license_acceptance=true \
         --cert_manager_ns=${PROJECT_CERT_MANAGER} \
         --licensing_ns=${PROJECT_LICENSE_SERVICE}
-12. Run the cpd-cli manage setup-instance-topology to install IBM Cloud Pak foundational services and create the required ConfigMap: without tethered projects
+11. Run the cpd-cli manage setup-instance-topology to install IBM Cloud Pak foundational services and create the required ConfigMap: without tethered projects
     
     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-installing-cloud-pak-foundational-services
 
@@ -72,7 +72,7 @@ https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-require
         --cpd_instance_ns=${PROJECT_CPD_INST_OPERANDS} \
         --license_acceptance=true \
         --block_storage_class=${STG_CLASS_BLOCK}
-13. Review the license for CP4D
+12. Review the license for CP4D
     
     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-installing-cloud-pak#taskinstall-platform-instance__steps__1 step 2
 
@@ -80,7 +80,7 @@ https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-require
         --release=5.0.0 \
         --license-type=SE
 
-14. Install the operators in the operators project for the instance for Cloud Pak for Data Platform Operator only 
+13. Install the operators in the operators project for the instance for Cloud Pak for Data Platform Operator only 
     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-installing-cloud-pak#taskinstall-platform-instance__steps__1 step 3
 
         cpd-cli manage apply-olm \
@@ -88,7 +88,7 @@ https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-require
         --cpd_operator_ns=${PROJECT_CPD_INST_OPERATORS} \
         --components=cpd_platform
 
-15. Install the operands in the operands project for the instance:
+14. Install the operands in the operands project for the instance:
     
     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-installing-cloud-pak#taskinstall-platform-instance__steps__1 step 4
     For OpenShift Data Foundation storage, to install Cloud Pak for Data control plane only
@@ -101,7 +101,7 @@ https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-require
         --file_storage_class=${STG_CLASS_FILE} \
         --license_acceptance=true
 
-16. Get the Cloud Pak for data web interface url and credentials
+15. Get the Cloud Pak for data web interface url and credentials
     
     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-installing-cloud-pak#taskinstall-platform-instance__steps__1 step 6
 
