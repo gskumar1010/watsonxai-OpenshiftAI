@@ -34,9 +34,10 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
 
     Then update the global pull secret<br/>
     https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=cluster-updating-global-image-pull-secret command	
-    
-	cpd-cli manage add-icr-cred-to-global-pull-secret \
-	--entitled_registry_key=${IBM_ENTITLEMENT_KEY}
+
+        cpd-cli manage add-icr-cred-to-global-pull-secret \
+        --entitled_registry_key=${IBM_ENTITLEMENT_KEY}
+
 
 
  8.  Create 2 namespaces in OpenShift (cpd-operators, cp4d)
