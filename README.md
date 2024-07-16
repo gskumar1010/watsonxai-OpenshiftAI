@@ -150,8 +150,7 @@ https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-require
                --type=merge \
                --patch='{"spec":{"install_model_list": ["meta-llama-llama-2-70b-chat","ibm-granite-13b-chat-v2"]}}'
                
-<img width="987" alt="image" src="images/pod-with-foundational-model-running.png">
+<img width="987" alt="image" src="images/ibm-granite-openshiftai-watsonxai.png">
 <br/>
-<br/>
-<img width="987" alt="image" src="images/image.png">
+
                 
