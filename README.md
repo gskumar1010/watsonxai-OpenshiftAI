@@ -15,6 +15,15 @@ Watsonx.ai can be installed on top of OpenShift either in public cloud or on-pre
       Then, from Operator hub from OpenShift web interface, install NVIDIA GPU Operator. Then create an instance of Cluster Policy<br/>
 
    Then, from Operator hub from OpenShift web interface, install OpenShift AI Operator. Please follow instructions listed in https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.8/html/installing_and_uninstalling_openshift_ai_self-managed/preparing-openshift-ai-for-ibm-cpd_prepare-openshift-ai-ibm-cpd#preparing-openshift-ai-for-ibm-cpd_prepare-openshift-ai-ibm-cpd <br/>
+	I made 4 changes in  inferenceservice-config in redhat-ods-applications namespace <br/>
+
+        enableDirectPvcVolumeMount  -> changed it from false to true 
+        ingressClassName -> changed it from istio to openshift-default 
+        changed "domainTemplate": "{{ .Name }}-{{ .Namespace }}.{{ .IngressDomain }} to "domainTemplate": "example.com"
+        Added annotation    
+           opendatahub.io/managed: 'false' 
+    
+
         
 3. Have Podman or docker desktop up and running on your workstation - to pull images from IBM’s registry
 
