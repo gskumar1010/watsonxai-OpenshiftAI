@@ -157,9 +157,15 @@ https://www.ibm.com/docs/en/cloud-paks/cp-data/5.0.x?topic=data-applying-require
                oc patch watsonxaiifm watsonxaiifm-cr \
                --namespace=${PROJECT_CPD_INST_OPERANDS} \
                --type=merge \
-               --patch='{"spec":{"install_model_list": ["meta-llama-llama-2-70b-chat","ibm-granite-13b-chat-v2"]}}'
-               
+               --patch='{"spec":{"install_model_list": ["ibm-granite-13b-chat-v2"]}}'
+
+	       
 <img width="987" alt="image" src="images/ibm-granite-openshiftai-watsonxai.png">
 <br/>
 
-                
+### Troubleshooting the installation
+
+If foundational model is not being added, searching for InferenceService custom resource, checking its events in PROJECT_CPD_INST_OPERANDS namespace is a good idea <br/>
+
+If in CPD5.0, foundational model is not getting added, checking the kserve-controller-manager-xxxxx pod logs in redhat-ods-applications namespace is another troubleshooting option
+
