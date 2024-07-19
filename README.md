@@ -1,6 +1,6 @@
-# Installation of Watsonx.ai on OpenShift
+# Installation of Watsonx.ai on OpenShift AI
 
-This guide provides instructions for a quick PoC kind of installation of Watsonx.ai on OpenShift.<br/>
+This guide provides instructions for a quick PoC kind of installation of Watsonx.ai on OpenShift AI.<br/>
 Watsonx.ai can be installed on top of OpenShift either in public cloud or on-prem.
 
 ## Installation Steps
